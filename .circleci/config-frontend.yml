@@ -3,22 +3,26 @@ version: 2.1
 parameters:
   root-folder:
     type: string
-    default: ~/github.com/personal/circleci/frontend
+    default: ~/github.com/personal/circleci
+  frontend-folder:
+    type: string
+    default: ~/frontend
   frontend-has-changed:
     type: boolean
     default: false
 
 executors:
   node_executor:
+    working_directory: << pipeline.parameters.root-folder >>
     docker:
       - image: cimg/node:18
 
 jobs:
   checkout:
     executor: node_executor
-    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - checkout
+          path: << pipeline.parameters.frontend-folder >>
       - restore_cache:
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
@@ -35,7 +39,6 @@ jobs:
 
   build:
     executor: node_executor
-    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
           at: << pipeline.parameters.root-folder >>
@@ -43,7 +46,6 @@ jobs:
       
   test:
     executor: node_executor
-    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
           at: << pipeline.parameters.root-folder >>
@@ -51,7 +53,6 @@ jobs:
   
   deploy:
     executor: node_executor
-    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
           at: << pipeline.parameters.root-folder >>
