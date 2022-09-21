@@ -19,10 +19,10 @@ executors:
 jobs:
   checkout:
     executor: node_executor
-    working_directory: << pipeline.parameters.root-folder >>
+    working_directory: << pipeline.parameters.frontend-folder >>
     steps:
       - checkout:
-          path: << pipeline.parameters.frontend-folder >>
+          path: << pipeline.parameters.root-folder >>
       - restore_cache:
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}

@@ -18,11 +18,11 @@ executors:
 
 jobs:
   build:
+    working_directory: << pipeline.parameters.backend-folder >>
     executor: go_executor
-    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - checkout:
-          path: << pipeline.parameters.backend-folder >>
+          path: << pipeline.parameters.root-folder >>
       - run: go install
       - run: go build
       - run: go test -v
