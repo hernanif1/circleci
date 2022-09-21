@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   root-folder:
     type: string
-    default: ~/github.com/personal/circleci
+    default: ~/github.com/personal/circleci/backend
   backend-has-changed:
     type: boolean
     default: false
