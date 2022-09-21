@@ -65,7 +65,7 @@ workflows:
     when: << pipeline.parameters.frontend-has-changed >>
     jobs:
       - checkout
-      - build
+      - build:
           requires:
             - checkout
       - deploy:
