@@ -1,11 +1,6 @@
 version: 2.1
 setup: true
 
-# parameters:
-#   root-folder:
-#     type: string
-#     default: ~/github.com/personal/circleci
-    
 orbs:
   path-filtering: circleci/path-filtering@0.1.3
 
