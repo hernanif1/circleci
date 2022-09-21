@@ -6,7 +6,7 @@ parameters:
     default: ~/github.com/personal/circleci
   frontend-folder:
     type: string
-    default: << pipeline.parameters.root-folder >>/frontend
+    default: ~/github.com/personal/circleci/frontend
   frontend-has-changed:
     type: boolean
     default: false
