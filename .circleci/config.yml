@@ -13,8 +13,8 @@ workflows:
           config-path: .circleci/config-backend.yml
           mapping: backend/.* backend-has-changed true
 
-      - path-filtering/filter:
-          name: Frontend
-          base-revision: main
-          config-path: .circleci/config-frontend.yml
-          mapping: frontend/.* frontend-has-changed true
+      # - path-filtering/filter:
+      #     name: Frontend
+      #     base-revision: main
+      #     config-path: .circleci/config-frontend.yml
+      #     mapping: frontend/.* frontend-has-changed true
