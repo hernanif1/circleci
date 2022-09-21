@@ -21,7 +21,7 @@ jobs:
   checkout:
     executor: node_executor
     steps:
-      - checkout
+      - checkout:
           path: << pipeline.parameters.frontend-folder >>
       - restore_cache:
           keys:

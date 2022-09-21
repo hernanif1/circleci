@@ -21,7 +21,7 @@ jobs:
   build:
     executor: go_executor
     steps:
-      - checkout
+      - checkout:
           path: << pipeline.parameters.backend-folder >>
       - run: go install
       - run: go build
