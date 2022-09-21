@@ -1,0 +1,79 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
+executors:
+  node_executor:
+    docker:
+      - image: cimg/node:18
+
+jobs:
+  checkout:
+    executor: node_executor
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            curl -L https://pnpm.js.org/pnpm.js | node - add --global pnpm@7
+      - run:
+          name: Install Dependencies
+          command: |
+            cd frontend
+            pnpm install
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+      - persist_to_workspace:
+          root: ~/github.com/Duxxie/pim
+          paths:
+            - ./*
+
+  build:
+    executor: node_executor
+    steps:
+      - checkout
+
+      - run:
+          name: Build frontend
+          command: |
+            cd frontend
+            npm run build
+      
+  test:
+    steps:
+      - checkout
+      - run:
+          command: npm run test
+          name: Run tests
+
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  
+  deploy:
+    docker:
+      - image: cimg/node:17.2.0
+    steps:
+      - attach_workspace:
+          at: ~/project
+
+workflows:
+  on_commit:
+    jobs:
+      - checkout_install
+      - build
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: main
