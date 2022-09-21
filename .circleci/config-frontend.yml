@@ -33,32 +33,32 @@ jobs:
           paths:
             - node_modules
       - persist_to_workspace:
-          root: << pipeline.parameters.frontend-folder >>
+          root: << pipeline.parameters.root-folder >>
           paths:
             - ./*
 
   build:
     executor: node_executor
-    working_directory: << pipeline.parameters.frontend-folder >>
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
-          at: << pipeline.parameters.frontend-folder >>
+          at: << pipeline.parameters.root-folder >>
       - run: npm run build
       
   test:
     executor: node_executor
-    working_directory: << pipeline.parameters.frontend-folder >>
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
-          at: << pipeline.parameters.frontend-folder >>
+          at: << pipeline.parameters.root-folder >>
       - run: npm run test
   
   deploy:
     executor: node_executor
-    working_directory: << pipeline.parameters.frontend-folder >>
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
-          at: << pipeline.parameters.frontend-folder >>
+          at: << pipeline.parameters.root-folder >>
 
 workflows:
   on_commit:
