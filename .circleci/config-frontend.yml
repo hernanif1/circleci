@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  frontend-has-changed:
+    type: boolean
+    default: false
+
 executors:
   node_executor:
     docker:
@@ -45,6 +50,7 @@ jobs:
           at: ~/github.com/personal/circleci
 
 workflows:
+  when: << pipeline.parameters.frontend-has-changed >>
   on_commit:
     jobs:
       - checkout

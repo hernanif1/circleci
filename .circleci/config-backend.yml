@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  backend-has-changed:
+    type: boolean
+    default: false
+
 jobs:
   build:
     docker:
@@ -9,3 +14,10 @@ jobs:
       - run: go install
       - run: go build
       - run: go test -v
+
+workflows:
+  when: << pipeline.parameters.backend-has-changed >>
+  on_commit:
+    jobs:
+      - checkout
+      - build
