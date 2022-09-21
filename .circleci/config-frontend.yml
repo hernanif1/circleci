@@ -33,7 +33,9 @@ jobs:
           paths:
             - node_modules
       - persist_to_workspace:
-          paths: << pipeline.parameters.root-folder >>
+          root: << pipeline.parameters.root-folder >>
+          paths:
+            - ./*
 
   build:
     executor: node_executor
