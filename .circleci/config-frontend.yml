@@ -14,7 +14,7 @@ parameters:
 executors:
   node_executor:
     docker:
-      - image: cimg/node:18
+      - image: cimg/node:18.9.0
 
 jobs:
   checkout:

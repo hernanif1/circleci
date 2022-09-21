@@ -26,15 +26,8 @@ jobs:
       - run: go build
       - run: go test -v
 
-
 workflows:
   on_commit:
     when: << pipeline.parameters.backend-has-changed >>
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
