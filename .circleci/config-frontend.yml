@@ -11,20 +11,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          name: Restore pnpm Package Cache
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-      - run:
-          name: Install pnpm package manager
-          command: |
-            curl -L https://pnpm.js.org/pnpm.js | node - add --global pnpm@7
-      - run:
-          name: Install Dependencies
-          command: |
-            cd frontend
-            pnpm install
+      - run: curl -L https://pnpm.js.org/pnpm.js | node - add --global pnpm@7
+      - run: pnpm install
       - save_cache:
-          name: Save pnpm Package Cache
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - node_modules
@@ -36,35 +27,27 @@ jobs:
   build:
     executor: node_executor
     steps:
-      - checkout
-      - run:
-          name: Build frontend
-          command: |
-            cd frontend
-            npm run build
+      - attach_workspace:
+          at: ~/github.com/personal/circleci
+      - run: npm run build
       
   test:
+    executor: node_executor
     steps:
-      - checkout
-      - run:
-          command: npm run test
-          name: Run tests
-
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
+      - attach_workspace:
+          at: ~/github.com/personal/circleci
+      - run: npm run test
   
   deploy:
     executor: node_executor
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/github.com/personal/circleci
 
 workflows:
   on_commit:
     jobs:
-      - checkout_install
+      - checkout
       - build
       - deploy:
           requires:
