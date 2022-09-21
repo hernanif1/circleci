@@ -17,8 +17,7 @@ jobs:
       - run: go test -v
 
 workflows:
-  when: << pipeline.parameters.backend-has-changed >>
   on_commit:
+    when: << pipeline.parameters.backend-has-changed >>
     jobs:
-      - checkout
       - build
