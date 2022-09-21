@@ -6,10 +6,12 @@ workflows:
   divide-config:
     jobs:
       - path-filtering/filter:
+          name: Backend
           base-revision: main
           config-path: .circleci/config-backend.yml
           mapping: backend/.* run-backend true
       - path-filtering/filter:
+          name: Frontend
           base-revision: main
           config-path: .circleci/config-frontend.yml
           mapping: frontend/.* run-frontend true
