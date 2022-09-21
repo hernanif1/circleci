@@ -13,13 +13,13 @@ parameters:
 
 executors:
   go_executor:
-    working_directory: << pipeline.parameters.root-folder >>
     docker:
       - image: cimg/go:1.19.1
 
 jobs:
   build:
     executor: go_executor
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - checkout:
           path: << pipeline.parameters.backend-folder >>
