@@ -5,17 +5,17 @@ orbs:
   path-filtering: circleci/path-filtering@0.1.3
 
 workflows:
-  backend:
-    jobs:
-      - path-filtering/filter:
-          base-revision: main
-          mapping: backend/.* backend-has-changed true
-          config-path: .circleci/config-backend.yml
-
-  # frontend:
+  # backend:
   #   jobs:
   #     - path-filtering/filter:
   #         base-revision: main
-  #         config-path: .circleci/config-frontend.yml
-  #         mapping: frontend/.* frontend-has-changed true
+  #         mapping: backend/.* backend-has-changed true
+  #         config-path: .circleci/config-backend.yml
+
+  frontend:
+    jobs:
+      - path-filtering/filter:
+          base-revision: main
+          config-path: .circleci/config-frontend.yml
+          mapping: frontend/.* frontend-has-changed true
   
