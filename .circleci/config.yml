@@ -1,4 +1,3 @@
-
 version: 2.1
 setup: true
 orbs:
@@ -9,8 +8,8 @@ workflows:
       - path-filtering/filter:
           base-revision: main
           config-path: .circleci/config-backend.yml
-          mapping: backend/.*
+          mapping: backend/.* run-backend true
       - path-filtering/filter:
           base-revision: main
           config-path: .circleci/config-frontend.yml
-          mapping: frontend/.*
+          mapping: frontend/.* run-frontend true
