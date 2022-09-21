@@ -10,13 +10,13 @@ parameters:
 
 executors:
   node_executor:
-    working_directory: << pipeline.parameters.root-folder >>
     docker:
       - image: cimg/node:18
 
 jobs:
   checkout:
     executor: node_executor
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - checkout
       - restore_cache:
@@ -35,6 +35,7 @@ jobs:
 
   build:
     executor: node_executor
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
           at: << pipeline.parameters.root-folder >>
@@ -42,6 +43,7 @@ jobs:
       
   test:
     executor: node_executor
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
           at: << pipeline.parameters.root-folder >>
@@ -49,6 +51,7 @@ jobs:
   
   deploy:
     executor: node_executor
+    working_directory: << pipeline.parameters.root-folder >>
     steps:
       - attach_workspace:
           at: << pipeline.parameters.root-folder >>
