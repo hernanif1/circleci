@@ -1,14 +1,22 @@
 version: 2.1
 
 parameters:
+  root-folder:
+    type: string
+    default: ~/github.com/personal/circleci
   backend-has-changed:
     type: boolean
     default: false
 
-jobs:
-  build:
+executors:
+  go_executor:
+    working_directory: << pipeline.parameters.root-folder >>
     docker:
       - image: cimg/go:1.19.1
+
+jobs:
+  build:
+    executor: go_executor
     steps:
       - checkout
       - run: go install

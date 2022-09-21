@@ -1,12 +1,16 @@
 version: 2.1
 
 parameters:
+  root-folder:
+    type: string
+    default: ~/github.com/personal/circleci
   frontend-has-changed:
     type: boolean
     default: false
 
 executors:
   node_executor:
+    working_directory: << pipeline.parameters.root-folder >>
     docker:
       - image: cimg/node:18
 
@@ -25,7 +29,7 @@ jobs:
           paths:
             - node_modules
       - persist_to_workspace:
-          root: ~/github.com/personal/circleci
+          root: << pipeline.parameters.root-folder >>
           paths:
             - ./*
 
@@ -33,21 +37,21 @@ jobs:
     executor: node_executor
     steps:
       - attach_workspace:
-          at: ~/github.com/personal/circleci
+          at: << pipeline.parameters.root-folder >>
       - run: npm run build
       
   test:
     executor: node_executor
     steps:
       - attach_workspace:
-          at: ~/github.com/personal/circleci
+          at: << pipeline.parameters.root-folder >>
       - run: npm run test
   
   deploy:
     executor: node_executor
     steps:
       - attach_workspace:
-          at: ~/github.com/personal/circleci
+          at: << pipeline.parameters.root-folder >>
 
 workflows:
   on_commit:
