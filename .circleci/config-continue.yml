@@ -26,10 +26,6 @@ executors:
   node_executor:
     docker:
       - image: cimg/node:18.9.0
-  
-  go_executor:
-    docker:
-      - image: cimg/go:1.19.1
 
 
 # Jobs ###########################################################
@@ -59,7 +55,6 @@ jobs:
   # Backend
   ci_backend:
     working_directory: << pipeline.parameters.backend-folder >>
-    executor: go_executor
     steps:
       - checkout:
           path: << pipeline.parameters.root-folder >>
