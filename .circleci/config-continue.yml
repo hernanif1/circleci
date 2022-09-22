@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  go: circleci/go@1.7.1
+
 parameters:
   root-folder:
     type: string
@@ -60,7 +63,8 @@ jobs:
     steps:
       - checkout:
           path: << pipeline.parameters.root-folder >>
-      - run: go test
+      - go/mod-download-cached
+      - go/test
 
 
 # Workflows #####################################################
