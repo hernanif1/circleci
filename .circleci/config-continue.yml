@@ -63,7 +63,7 @@ jobs:
     steps:
       - checkout:
           path: << pipeline.parameters.root-folder >>
-      - go/mod-download-cached
+      # - go/mod-download-cached
       - go/test
 
 
