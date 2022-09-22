@@ -1,3 +1,3 @@
 # Frontend
 
-React + Typescript Frontend with Vite
+React + Typescript Frontend with Vite.
