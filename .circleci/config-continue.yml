@@ -1,0 +1,81 @@
+version: 2.1
+
+parameters:
+  root-folder:
+    type: string
+    default: ~/github.com/personal/circleci
+  
+  frontend-folder:
+    type: string
+    default: ~/github.com/personal/circleci/frontend
+  frontend-has-changed:
+    type: boolean
+    default: false
+
+  backend-folder:
+    type: string
+    default: ~/github.com/personal/circleci/backend
+  backend-has-changed:
+    type: boolean
+    default: false
+
+executors:
+  node_executor:
+    docker:
+      - image: cimg/node:18.9.0
+  
+  go_executor:
+    docker:
+      - image: cimg/go:1.19.1
+
+# Jobs ###########################################################
+jobs:
+  # Frontend
+  ci_frontend:
+    executor: node_executor
+    working_directory: << pipeline.parameters.frontend-folder >>
+    steps:
+      - checkout:
+          path: << pipeline.parameters.root-folder >>
+      - restore_cache:
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run: curl -fsSL https://get.pnpm.io/install.sh | SHELL=`which bash` bash -
+      - run: pnpm install
+      - run: npm run build
+      - save_cache:
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+      - persist_to_workspace:
+          root: << pipeline.parameters.frontend-folder >>
+          paths:
+            - ./*
+
+  # Backend
+  ci_backend:
+    working_directory: << pipeline.parameters.backend-folder >>
+    executor: go_executor
+    steps:
+      - checkout:
+          path: << pipeline.parameters.root-folder >>
+      - run: go install
+      - run: go build
+      - run: go test -v
+      - persist_to_workspace:
+          root: << pipeline.parameters.backend-folder >>
+          paths:
+            - ./*
+
+
+# Workflows #####################################################
+workflows:
+  on_commit_frontend:
+    when: << pipeline.parameters.frontend-has-changed >>
+    jobs:
+      - ci_frontend
+
+  on_commit_backend:
+    when: << pipeline.parameters.backend-has-changed >>
+    jobs:
+      - ci_backend

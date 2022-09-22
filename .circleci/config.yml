@@ -1,17 +1,15 @@
 version: 2.1
 setup: true
+
 orbs:
   path-filtering: circleci/path-filtering@0.1.3
+
 workflows:
-  divide-config:
+  split:
     jobs:
       - path-filtering/filter:
-          name: Backend
           base-revision: main
-          config-path: .circleci/config-backend.yml
-          mapping: backend/.* run-backend true
-      - path-filtering/filter:
-          name: Frontend
-          base-revision: main
-          config-path: .circleci/config-frontend.yml
-          mapping: frontend/.* run-frontend true
+          config-path: .circleci/config-continue.yml
+          mapping: |
+            backend/.* backend-has-changed true
+            frontend/.* frontend-has-changed true
