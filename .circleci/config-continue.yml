@@ -60,7 +60,7 @@ jobs:
     steps:
       - checkout:
           path: << pipeline.parameters.root-folder >>
-      - go/test
+      - run: go test
 
 
 # Workflows #####################################################
