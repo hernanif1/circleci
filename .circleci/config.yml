@@ -9,9 +9,7 @@ workflows:
     jobs:
       - path-filtering/filter:
           base-revision: main
-          mapping: backend/.* backend-has-changed true
-          config-path: .circleci/config-backend.yml
-      - path-filtering/filter:
-          base-revision: main
-          config-path: .circleci/config-frontend.yml
-          mapping: frontend/.* frontend-has-changed true
+          config-path: .circleci/config-continue.yml
+          mapping: 
+            backend/.* backend-has-changed true
+            frontend/.* frontend-has-changed true
