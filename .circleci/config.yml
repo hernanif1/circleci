@@ -10,6 +10,6 @@ workflows:
       - path-filtering/filter:
           base-revision: main
           config-path: .circleci/config-continue.yml
-          mapping: 
+          mapping: |
             backend/.* backend-has-changed true
             frontend/.* frontend-has-changed true
