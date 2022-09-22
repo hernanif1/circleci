@@ -28,6 +28,7 @@ executors:
     docker:
       - image: cimg/go:1.19.1
 
+
 # Jobs ###########################################################
 jobs:
   # Frontend
