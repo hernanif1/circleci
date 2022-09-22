@@ -43,7 +43,6 @@ jobs:
       - run: curl -fsSL https://get.pnpm.io/install.sh | SHELL=`which bash` bash -
       - run: pnpm install
       - run: npm run build
-      - run: npm run test
       - save_cache:
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
           paths:
