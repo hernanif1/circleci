@@ -64,7 +64,7 @@ jobs:
       - checkout:
           path: << pipeline.parameters.root-folder >>
       - go/mod-download-cached
-      - go/test
+      - run: go test
 
 
 # Workflows #####################################################
