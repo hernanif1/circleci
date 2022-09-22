@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  go: circleci/go@1.7.1
+
 parameters:
   root-folder:
     type: string
@@ -60,13 +63,9 @@ jobs:
     steps:
       - checkout:
           path: << pipeline.parameters.root-folder >>
-      - run: go install
-      - run: go build
-      - run: go test -v
-      - persist_to_workspace:
-          root: << pipeline.parameters.backend-folder >>
-          paths:
-            - ./*
+      - go/install: 
+          version: 1.19.1
+      - run: go test
 
 
 # Workflows #####################################################
