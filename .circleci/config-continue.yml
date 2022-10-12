@@ -65,9 +65,9 @@ jobs:
           path: << pipeline.parameters.root-folder >>
 
       - run:
-        name: "Setup custom environment variables"
-        command: >
-          echo "export TOKEN='test'" >> $BASH_ENV; source $BASH_ENV;
+          name: "Setup custom environment variables"
+          command: >
+            echo "export TOKEN='test'" >> $BASH_ENV; source $BASH_ENV;
 
       - run:
           name: "Setup custom environment variables"
