@@ -64,10 +64,10 @@ jobs:
       - checkout:
           path: << pipeline.parameters.root-folder >>
 
-        - run:
-          name: "Setup custom environment variables"
-          command: >
-            echo "export TOKEN='test'" >> $BASH_ENV; source $BASH_ENV;
+      - run:
+        name: "Setup custom environment variables"
+        command: >
+          echo "export TOKEN='test'" >> $BASH_ENV; source $BASH_ENV;
 
       - run:
           name: "Setup custom environment variables"
@@ -96,7 +96,7 @@ jobs:
       - run:
           name: "Setup custom environment variables"
           command: echo 'export BACKEND_ENV_VAR2="FOO"' >> $BASH_ENV
-          
+
       - go/mod-download-cached
       - run: go test
 
