@@ -63,6 +63,40 @@ jobs:
     steps:
       - checkout:
           path: << pipeline.parameters.root-folder >>
+
+        - run:
+          name: "Setup custom environment variables"
+          command: >
+            echo "export TOKEN='test'" >> $BASH_ENV; source $BASH_ENV;
+
+      - run:
+          name: "Setup custom environment variables"
+          command: >
+            echo 'export HEIN=why' >> $BASH_ENV
+
+      - run:
+          name: "Setup custom environment variables"
+          command: >
+            echo 'export HEIN1="vall"' >> $BASH_ENV
+
+      - run:
+          name: "Setup custom environment variables"
+          command: >
+            echo 'export HEIN2="vall"'; source $BASH_ENV
+      
+      - run:
+          name: "Setup custom environment variables"
+          command: >
+            echo "export HEIN3=vall"; source $BASH_ENV
+
+      - run:
+          name: "Setup custom environment variables"
+          command: >
+            echo "export HEIN4=vall"; source $BASH_ENV
+      - run:
+          name: "Setup custom environment variables"
+          command: echo 'export BACKEND_ENV_VAR2="FOO"' >> $BASH_ENV
+          
       - go/mod-download-cached
       - run: go test
 
