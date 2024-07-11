@@ -1,3 +1,3 @@
 # Backend
 
-GO Backend API example 1
+GO Backend API example 2
